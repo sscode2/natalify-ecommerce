@@ -1,0 +1,14 @@
+# Netlify redirects file
+# Handle client-side routing
+
+# Redirect all 404s to index.html for SPA behavior
+/*    /index.html   200
+
+# Force HTTPS
+http://natalify-store.netlify.app/*    https://natalify-store.netlify.app/:splat    301!
+
+# Cache static assets
+/assets/*  /assets/:splat  200  Cache-Control: max-age=31536000
+/images/*  /images/:splat  200  Cache-Control: max-age=31536000
+*.css      /:splat         200  Cache-Control: max-age=31536000
+*.js       /:splat         200  Cache-Control: max-age=31536000

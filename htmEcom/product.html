@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Natalify</title>
+    <meta name="description" content="View detailed product information at Natalify. High-quality products with great prices and fast delivery in Bangladesh.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <style>
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .product-images {
+            position: relative;
+        }
+        
+        .main-product-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .product-detail-info {
+            padding: 1rem;
+        }
+        
+        .product-detail-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+        
+        .product-detail-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .product-detail-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-specs {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quantity-selector label {
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .product-detail-title {
+                font-size: 1.5rem;
+            }
+            
+            .product-detail-price {
+                font-size: 2rem;
+            }
+            
+            .product-detail-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Natalify</a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                
+                <button class="cart-icon" onclick="window.location.href='cart.html'">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                
+                <button class="user-icon" id="userIcon" onclick="window.location.href='login.html'">👤</button>
+                
+                <button class="btn btn-outline btn-small" id="loginBtn" onclick="window.location.href='login.html'">Login</button>
+                <button class="btn btn-primary btn-small hidden" id="logoutBtn">Logout</button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <section class="section" style="padding: 1rem 2rem;">
+            <div class="container">
+                <nav style="font-size: 0.9rem; color: var(--dark-gray);">
+                    <a href="index.html" style="color: var(--primary-green); text-decoration: none;">Home</a> 
+                    > <a href="shop.html" style="color: var(--primary-green); text-decoration: none;">Shop</a> 
+                    > <span id="breadcrumbCategory">Product</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Product Details -->
+        <section class="section">
+            <div class="container">
+                <div id="productDetails">
+                    <!-- Product details will be loaded here -->
+                    <div class="text-center">
+                        <p>Loading product details...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Related Products</h2>
+                <div class="product-grid" id="relatedProducts">
+                    <!-- Related products will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natalify</h3>
+                <p>Your trusted online shopping destination in Bangladesh. We bring you quality products at great prices with fast delivery.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">📱</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html">Cart</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <a href="shop.html?category=Fashion">Fashion</a>
+                <a href="shop.html?category=Electronics">Electronics</a>
+                <a href="shop.html?category=Home">Home & Garden</a>
+                <a href="shop.html?category=Sports">Sports</a>
+                <a href="shop.html?category=Beauty">Beauty</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Shipping Info</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Returns</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">FAQ</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Size Guide</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Natalify. All rights reserved. Made with ❤️ in Bangladesh.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js"></script>
+    <script>
+        let currentProduct = null;
+        let selectedQuantity = 1;
+
+        // Sample products data
+        const sampleProducts = [
+            { 
+                id: '1', 
+                name: 'Cotton T-Shirt', 
+                price: 599, 
+                category: 'Fashion', 
+                image: 'https://via.placeholder.com/500x400', 
+                rating: 4.5, 
+                reviews: 23,
+                description: 'Premium quality cotton t-shirt perfect for everyday wear. Made from 100% organic cotton with a comfortable fit and durable construction. Available in multiple colors and sizes.',
+                specifications: {
+                    'Material': '100% Organic Cotton',
+                    'Fit': 'Regular Fit',
+                    'Care': 'Machine Washable',
+                    'Origin': 'Bangladesh',
+                    'Warranty': '30 Days Return Policy'
+                }
+            },
+            { 
+                id: '2', 
+                name: 'Wireless Headphones', 
+                price: 2499, 
+                category: 'Electronics', 
+                image: 'https://via.placeholder.com/500x400', 
+                rating: 4.2, 
+                reviews: 45,
+                description: 'High-quality wireless headphones with noise cancellation and superior sound quality. Long battery life and comfortable design for extended use.',
+                specifications: {
+                    'Battery Life': '30 Hours',
+                    'Connectivity': 'Bluetooth 5.0',
+                    'Noise Cancellation': 'Active',
+                    'Weight': '250g',
+                    'Warranty': '1 Year'
+                }
+            },
+            { 
+                id: '3', 
+                name: 'Coffee Mug Set', 
+                price: 899, 
+                category: 'Home', 
+                image: 'https://via.placeholder.com/500x400', 
+                rating: 4.8, 
+                reviews: 12,
+                description: 'Beautiful ceramic coffee mug set perfect for your morning coffee. Set includes 4 mugs with elegant design and comfortable handles.',
+                specifications: {
+                    'Material': 'Ceramic',
+                    'Capacity': '350ml each',
+                    'Set Includes': '4 Mugs',
+                    'Dishwasher Safe': 'Yes',
+                    'Microwave Safe': 'Yes'
+                }
+            }
+        ];
+
+        // Initialize product page
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            if (productId) {
+                loadProductDetails(productId);
+            } else {
+                document.getElementById('productDetails').innerHTML = '<p class="text-center">Product not found.</p>';
+            }
+            
+            updateCartUI();
+        });
+
+        // Load product details
+        function loadProductDetails(productId) {
+            currentProduct = sampleProducts.find(p => p.id === productId);
+            
+            if (!currentProduct) {
+                document.getElementById('productDetails').innerHTML = '<p class="text-center">Product not found.</p>';
+                return;
+            }
+            
+            displayProductDetails(currentProduct);
+            updateBreadcrumb(currentProduct.category);
+            loadRelatedProducts(currentProduct.category);
+        }
+
+        // Display product details
+        function displayProductDetails(product) {
+            const container = document.getElementById('productDetails');
+            
+            container.innerHTML = `
+                <div class="product-detail-container">
+                    <div class="product-images">
+                        <img src="${product.image}" alt="${product.name}" class="main-product-image" onclick="zoomImage(this)">
+                    </div>
+                    <div class="product-detail-info">
+                        <h1 class="product-detail-title">${product.name}</h1>
+                        <p class="product-detail-price">৳${product.price}</p>
+                        <div class="product-rating mb-2">
+                            <span class="stars">${generateStars(product.rating)}</span>
+                            <span>(${product.reviews} reviews)</span>
+                        </div>
+                        
+                        <div class="quantity-selector">
+                            <label for="quantity">Quantity:</label>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" id="quantity" class="quantity-input" value="1" min="1" max="10" onchange="updateQuantity(this.value)">
+                                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="product-detail-actions">
+                            <button class="btn btn-primary" onclick="addToCart('${product.id}', selectedQuantity)">Add to Cart (৳${product.price})</button>
+                            <button class="btn btn-secondary" onclick="buyNow('${product.id}', selectedQuantity)">Buy Now</button>
+                        </div>
+                        
+                        <div class="product-specs">
+                            <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Specifications</h3>
+                            ${Object.entries(product.specifications || {}).map(([key, value]) => `
+                                <div class="spec-item">
+                                    <span style="font-weight: 600;">${key}:</span>
+                                    <span>${value}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="product-description">
+                            <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Description</h3>
+                            <p>${product.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Update breadcrumb
+        function updateBreadcrumb(category) {
+            const breadcrumb = document.getElementById('breadcrumbCategory');
+            if (breadcrumb) {
+                breadcrumb.textContent = category;
+            }
+        }
+
+        // Load related products
+        function loadRelatedProducts(category) {
+            const relatedProducts = sampleProducts.filter(p => p.category === category && p.id !== currentProduct.id).slice(0, 4);
+            displayRelatedProducts(relatedProducts);
+        }
+
+        // Display related products
+        function displayRelatedProducts(products) {
+            const container = document.getElementById('relatedProducts');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p class="text-center">No related products found.</p>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productCard = createProductCard(product);
+                container.appendChild(productCard);
+            });
+        }
+
+        // Create product card
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-price">৳${product.price}</p>
+                    <div class="product-rating">
+                        <span class="stars">${generateStars(product.rating)}</span>
+                        <span>(${product.reviews} reviews)</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary btn-small" onclick="addToCart('${product.id}', 1)">Add to Cart</button>
+                        <button class="btn btn-outline btn-small" onclick="viewProduct('${product.id}')">View Details</button>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        // Generate stars
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            
+            if (halfStar) {
+                stars += '☆';
+            }
+            
+            return stars;
+        }
+
+        // Change quantity
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let newQuantity = selectedQuantity + change;
+            
+            if (newQuantity < 1) newQuantity = 1;
+            if (newQuantity > 10) newQuantity = 10;
+            
+            selectedQuantity = newQuantity;
+            quantityInput.value = selectedQuantity;
+            
+            // Update add to cart button
+            updateAddToCartButton();
+        }
+
+        // Update quantity
+        function updateQuantity(value) {
+            const quantity = parseInt(value);
+            if (quantity >= 1 && quantity <= 10) {
+                selectedQuantity = quantity;
+                updateAddToCartButton();
+            }
+        }
+
+        // Update add to cart button
+        function updateAddToCartButton() {
+            const addToCartBtn = document.querySelector('.product-detail-actions .btn-primary');
+            if (addToCartBtn && currentProduct) {
+                const totalPrice = currentProduct.price * selectedQuantity;
+                addToCartBtn.textContent = `Add to Cart (৳${totalPrice})`;
+            }
+        }
+
+        // Add to cart
+        function addToCart(productId, quantity = 1) {
+            const product = sampleProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+            showAlert(`${quantity} item(s) added to cart!`, 'success');
+        }
+
+        // Buy now
+        function buyNow(productId, quantity = 1) {
+            addToCart(productId, quantity);
+            window.location.href = 'cart.html';
+        }
+
+        // View product
+        function viewProduct(productId) {
+            window.location.href = `product.html?id=${productId}`;
+        }
+
+        // Zoom image
+        function zoomImage(img) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 80%; text-align: center;">
+                    <span class="modal-close" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <img src="${img.src}" alt="${img.alt}" style="width: 100%; height: auto; border-radius: 10px;">
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '100px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Natalify</title>
+    <meta name="description" content="Review your cart and checkout securely at Natalify. Fast delivery across Bangladesh with multiple payment options.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <style>
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .checkout-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary-green);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary-green);
+            background: var(--light-green);
+        }
+        
+        .payment-option input[type="radio"] {
+            margin: 0;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .empty-cart-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .checkout-form {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Natalify</a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                
+                <button class="cart-icon" onclick="window.location.href='cart.html'">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                
+                <button class="user-icon" id="userIcon" onclick="window.location.href='login.html'">👤</button>
+                
+                <button class="btn btn-outline btn-small" id="loginBtn" onclick="window.location.href='login.html'">Login</button>
+                <button class="btn btn-primary btn-small hidden" id="logoutBtn">Logout</button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="section" style="padding: 2rem; background: var(--light-green);">
+            <div class="container">
+                <h1 class="section-title" style="margin-bottom: 1rem;">Shopping Cart</h1>
+                <nav style="font-size: 0.9rem; color: var(--dark-gray); text-align: center;">
+                    <a href="index.html" style="color: var(--primary-green); text-decoration: none;">Home</a> 
+                    > <a href="shop.html" style="color: var(--primary-green); text-decoration: none;">Shop</a> 
+                    > <span>Cart</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Cart Content -->
+        <section class="section">
+            <div class="container">
+                <div id="cartContent">
+                    <!-- Cart content will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natalify</h3>
+                <p>Your trusted online shopping destination in Bangladesh. We bring you quality products at great prices with fast delivery.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">📱</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html">Cart</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <a href="shop.html?category=Fashion">Fashion</a>
+                <a href="shop.html?category=Electronics">Electronics</a>
+                <a href="shop.html?category=Home">Home & Garden</a>
+                <a href="shop.html?category=Sports">Sports</a>
+                <a href="shop.html?category=Beauty">Beauty</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Shipping Info</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Returns</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">FAQ</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Size Guide</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Natalify. All rights reserved. Made with ❤️ in Bangladesh.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js"></script>
+    <script>
+        let cart = [];
+
+        // Initialize cart page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+            displayCart();
+            updateCartUI();
+        });
+
+        // Load cart from localStorage
+        function loadCart() {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+        }
+
+        // Display cart content
+        function displayCart() {
+            const container = document.getElementById('cartContent');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h2 style="color: var(--primary-green); margin-bottom: 1rem;">Your Cart is Empty</h2>
+                        <p style="margin-bottom: 2rem; color: var(--dark-gray);">Looks like you haven't added any items to your cart yet.</p>
+                        <a href="shop.html" class="btn btn-primary">Start Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="cart-container">
+                    <div class="cart-items-section">
+                        <h2 style="color: var(--primary-green); margin-bottom: 2rem;">Cart Items (${cart.length})</h2>
+                        <div id="cartItems">
+                            <!-- Cart items will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-section">
+                        <div class="checkout-form">
+                            <h3 style="color: var(--primary-green); margin-bottom: 1.5rem;">Order Summary</h3>
+                            <div id="orderSummary">
+                                <!-- Order summary will be loaded here -->
+                            </div>
+                            
+                            <form id="checkoutForm" style="margin-top: 2rem;">
+                                <h3 style="color: var(--primary-green); margin-bottom: 1.5rem;">Checkout Details</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Full Name *</label>
+                                    <input type="text" name="name" class="form-input" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number *</label>
+                                    <input type="tel" name="phone" class="form-input" required placeholder="+880">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Email (Optional)</label>
+                                    <input type="email" name="email" class="form-input">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Delivery Address *</label>
+                                    <textarea name="address" class="form-input form-textarea" required placeholder="House/Flat, Road, Area, City, District"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Payment Method</label>
+                                    <div class="payment-methods">
+                                        <label class="payment-option selected">
+                                            <input type="radio" name="payment" value="cod" checked>
+                                            <span>💰 Cash on Delivery</span>
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment" value="bkash">
+                                            <span>📱 bKash (Manual)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div id="bkashInfo" class="alert alert-info" style="display: none; margin-bottom: 1rem;">
+                                    <p><strong>bKash Payment:</strong></p>
+                                    <p>Send money to: <strong>01XXXXXXXXX</strong></p>
+                                    <p>Reference: Your order number</p>
+                                    <p>We will call you to confirm payment.</p>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary w-full" id="placeOrderBtn">
+                                    Place Order
+                                </button>
+                                
+                                <p style="font-size: 0.9rem; color: var(--dark-gray); text-align: center; margin-top: 1rem;">
+                                    By placing an order, you agree to our terms and conditions.
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            displayCartItems();
+            displayOrderSummary();
+            setupCheckoutForm();
+        }
+
+        // Display cart items
+        function displayCartItems() {
+            const container = document.getElementById('cartItems');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image || 'https://via.placeholder.com/80x80'}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <h4 class="cart-item-title">${item.name}</h4>
+                        <p class="cart-item-price">৳${item.price} each</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="setQuantity(${index}, this.value)">
+                            <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <p class="cart-item-total" style="font-size: 1.2rem; font-weight: 700; color: var(--accent-orange);">৳${itemTotal}</p>
+                        <button class="btn btn-outline btn-small" onclick="removeFromCart(${index})">Remove</button>
+                    </div>
+                `;
+                container.appendChild(cartItem);
+            });
+        }
+
+        // Display order summary
+        function displayOrderSummary() {
+            const container = document.getElementById('orderSummary');
+            if (!container) return;
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 1000 ? 0 : 60; // Free shipping over ৳1000
+            const total = subtotal + shipping;
+            
+            container.innerHTML = `
+                <div class="summary-row">
+                    <span>Subtotal (${cart.reduce((sum, item) => sum + item.quantity, 0)} items):</span>
+                    <span>৳${subtotal}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>${shipping === 0 ? 'FREE' : '৳' + shipping}</span>
+                </div>
+                ${shipping === 0 ? '<p style="font-size: 0.9rem; color: var(--secondary-green); margin: 0.5rem 0;">🎉 You got free shipping!</p>' : '<p style="font-size: 0.9rem; color: var(--dark-gray); margin: 0.5rem 0;">Free shipping on orders over ৳1000</p>'}
+                <div class="summary-row" style="font-size: 1.2rem; color: var(--primary-green);">
+                    <span><strong>Total:</strong></span>
+                    <span><strong>৳${total}</strong></span>
+                </div>
+            `;
+        }
+
+        // Update quantity
+        function updateQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                saveCart();
+                displayCart();
+                updateCartUI();
+            }
+        }
+
+        // Set quantity
+        function setQuantity(index, quantity) {
+            const qty = parseInt(quantity);
+            if (cart[index] && qty > 0) {
+                cart[index].quantity = qty;
+                saveCart();
+                displayCart();
+                updateCartUI();
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(index) {
+            if (confirm('Are you sure you want to remove this item?')) {
+                cart.splice(index, 1);
+                saveCart();
+                displayCart();
+                updateCartUI();
+                showAlert('Item removed from cart', 'info');
+            }
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Setup checkout form
+        function setupCheckoutForm() {
+            const form = document.getElementById('checkoutForm');
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const bkashInfo = document.getElementById('bkashInfo');
+            
+            // Handle payment method selection
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    
+                    const radio = option.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Show/hide bKash info
+                    if (radio.value === 'bkash') {
+                        bkashInfo.style.display = 'block';
+                    } else {
+                        bkashInfo.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Handle form submission
+            if (form) {
+                form.addEventListener('submit', handleCheckout);
+            }
+        }
+
+        // Handle checkout
+        async function handleCheckout(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                showAlert('Your cart is empty', 'error');
+                return;
+            }
+            
+            const formData = new FormData(e.target);
+            const orderData = {
+                customerName: formData.get('name'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                email: formData.get('email'),
+                paymentMethod: formData.get('payment'),
+                items: [...cart],
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                status: 'pending',
+                createdAt: new Date(),
+                orderNumber: generateOrderNumber()
+            };
+            
+            try {
+                // In a real app, this would save to Firebase
+                console.log('Order placed:', orderData);
+                
+                // Clear cart
+                cart = [];
+                localStorage.removeItem('cart');
+                updateCartUI();
+                
+                // Show success message
+                showOrderConfirmation(orderData.orderNumber);
+                
+            } catch (error) {
+                console.error('Error placing order:', error);
+                showAlert('Error placing order. Please try again.', 'error');
+            }
+        }
+
+        // Generate order number
+        function generateOrderNumber() {
+            return 'ORD' + Date.now().toString().slice(-8);
+        }
+
+        // Show order confirmation
+        function showOrderConfirmation(orderNumber) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="text-center">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                        <h2 style="color: var(--primary-green); margin-bottom: 1rem;">Order Confirmed!</h2>
+                        <p style="margin-bottom: 1rem;">Your order <strong>#${orderNumber}</strong> has been placed successfully.</p>
+                        <p style="margin-bottom: 2rem; color: var(--dark-gray);">We will contact you soon to confirm your order and arrange delivery.</p>
+                        <div style="display: flex; gap: 1rem; justify-content: center;">
+                            <button class="btn btn-primary" onclick="window.location.href='index.html'">Continue Shopping</button>
+                            <button class="btn btn-outline" onclick="window.location.href='shop.html'">Browse More</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '100px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

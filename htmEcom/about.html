@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Natalify</title>
+    <meta name="description" content="Learn about Natalify - Your trusted online shopping destination in Bangladesh. Our mission, vision, and commitment to quality service.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--primary-green);
+        }
+        
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .team-member {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-role {
+            color: var(--dark-gray);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-green);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin: 2rem 0;
+            padding: 0 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 1rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-year {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 2rem;
+            }
+            
+            .timeline-item::before {
+                left: 2rem;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 4rem);
+                margin-left: 4rem !important;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Natalify</a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                
+                <button class="cart-icon" onclick="window.location.href='cart.html'">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                
+                <button class="user-icon" id="userIcon" onclick="window.location.href='login.html'">👤</button>
+                
+                <button class="btn btn-outline btn-small" id="loginBtn" onclick="window.location.href='login.html'">Login</button>
+                <button class="btn btn-primary btn-small hidden" id="logoutBtn">Logout</button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- About Hero -->
+        <section class="about-hero">
+            <div class="container">
+                <h1>About Natalify</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">Modern Shopping Experience in Bangladesh</p>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="section">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">Our Story</h2>
+                    <p style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+                        Founded in 2024, Natalify emerged from a simple vision: to revolutionize online shopping in Bangladesh by providing quality products, exceptional service, and an unmatched customer experience.
+                    </p>
+                    
+                    <p style="margin-bottom: 1.5rem;">
+                        We started as a small team of passionate entrepreneurs who recognized the growing need for a reliable, user-friendly e-commerce platform in Bangladesh. Our founders, having experienced the challenges of online shopping firsthand, were determined to create a solution that would address these pain points while celebrating the rich culture and values of Bangladesh.
+                    </p>
+                    
+                    <p style="margin-bottom: 1.5rem;">
+                        Today, Natalify has grown into a trusted platform serving thousands of customers across Bangladesh. We pride ourselves on our commitment to quality, authenticity, and customer satisfaction. Every product in our catalog is carefully selected and verified to ensure it meets our high standards.
+                    </p>
+                    
+                    <p>
+                        Our name "Natalify" represents our mission to bring new life and vitality to the online shopping experience in Bangladesh. We believe that shopping should be enjoyable, convenient, and trustworthy – and that's exactly what we strive to deliver every day.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Values -->
+        <section class="section" style="background: var(--light-green);">
+            <div class="container">
+                <h2 class="section-title">Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">🎯</div>
+                        <h3 class="value-title">Quality First</h3>
+                        <p>We never compromise on quality. Every product is carefully selected and verified to ensure it meets our high standards and your expectations.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h3 class="value-title">Customer Trust</h3>
+                        <p>Building lasting relationships with our customers through transparency, reliability, and exceptional service is at the heart of everything we do.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">🚀</div>
+                        <h3 class="value-title">Innovation</h3>
+                        <p>We continuously evolve and improve our platform, embracing new technologies to enhance your shopping experience.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">🇧🇩</div>
+                        <h3 class="value-title">Local Pride</h3>
+                        <p>We're proud to be a Bangladeshi company, supporting local businesses and contributing to the growth of our digital economy.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">💚</div>
+                        <h3 class="value-title">Sustainability</h3>
+                        <p>We're committed to sustainable practices, from eco-friendly packaging to supporting environmentally conscious brands.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">⚡</div>
+                        <h3 class="value-title">Speed & Efficiency</h3>
+                        <p>Fast delivery, quick customer service, and efficient processes ensure you get what you need when you need it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Journey -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2024</div>
+                            <h3 style="color: var(--primary-green); margin-bottom: 0.5rem;">The Beginning</h3>
+                            <p>Natalify was founded with a vision to transform online shopping in Bangladesh. We launched with a curated selection of quality products.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2024</div>
+                            <h3 style="color: var(--primary-green); margin-bottom: 0.5rem;">Platform Launch</h3>
+                            <p>Our user-friendly e-commerce platform went live, featuring modern design, secure payments, and mobile-first approach.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2024</div>
+                            <h3 style="color: var(--primary-green); margin-bottom: 0.5rem;">Growing Community</h3>
+                            <p>We expanded our product catalog and built a loyal customer base across Bangladesh, focusing on quality and customer satisfaction.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">Future</div>
+                            <h3 style="color: var(--primary-green); margin-bottom: 0.5rem;">Expanding Horizons</h3>
+                            <p>We're working on exciting new features, partnerships with local artisans, and expanding our reach to serve more customers across Bangladesh.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Team -->
+        <section class="section" style="background: var(--light-green);">
+            <div class="container">
+                <h2 class="section-title">Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💼</div>
+                        <div class="member-name">Ahmed Rahman</div>
+                        <div class="member-role">Founder & CEO</div>
+                        <p>Passionate about e-commerce and technology, Ahmed leads our vision to revolutionize online shopping in Bangladesh.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💻</div>
+                        <div class="member-name">Fatima Khan</div>
+                        <div class="member-role">Head of Technology</div>
+                        <p>With expertise in web development and user experience, Fatima ensures our platform is cutting-edge and user-friendly.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍🎨</div>
+                        <div class="member-name">Karim Hassan</div>
+                        <div class="member-role">Head of Marketing</div>
+                        <p>Karim brings creative marketing strategies and deep understanding of the Bangladeshi market to grow our brand.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💼</div>
+                        <div class="member-name">Rashida Begum</div>
+                        <div class="member-role">Customer Success Manager</div>
+                        <p>Dedicated to ensuring every customer has an exceptional experience, Rashida leads our customer service initiatives.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="section">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); border-left: 4px solid var(--primary-green);">
+                        <h3 style="color: var(--primary-green); font-size: 1.5rem; margin-bottom: 1rem;">🎯 Our Mission</h3>
+                        <p>To provide Bangladesh with a world-class e-commerce platform that offers quality products, exceptional service, and a seamless shopping experience while supporting local businesses and communities.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); border-left: 4px solid var(--accent-orange);">
+                        <h3 style="color: var(--accent-orange); font-size: 1.5rem; margin-bottom: 1rem;">🔮 Our Vision</h3>
+                        <p>To become Bangladesh's most trusted and beloved e-commerce platform, setting new standards for online retail while contributing to the digital transformation of our nation.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; background: var(--primary-green); color: white; padding: 3rem; border-radius: 15px;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Join Our Journey</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Be part of the Natalify family and experience the future of online shopping in Bangladesh.</p>
+                    <a href="shop.html" class="btn btn-secondary">Start Shopping</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natalify</h3>
+                <p>Your trusted online shopping destination in Bangladesh. We bring you quality products at great prices with fast delivery.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">📱</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html">Cart</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <a href="shop.html?category=Fashion">Fashion</a>
+                <a href="shop.html?category=Electronics">Electronics</a>
+                <a href="shop.html?category=Home">Home & Garden</a>
+                <a href="shop.html?category=Sports">Sports</a>
+                <a href="shop.html?category=Beauty">Beauty</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Shipping Info</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Returns</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">FAQ</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Size Guide</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Natalify. All rights reserved. Made with ❤️ in Bangladesh.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js"></script>
+    <script>
+        // Initialize about page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartUI();
+        });
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '100px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

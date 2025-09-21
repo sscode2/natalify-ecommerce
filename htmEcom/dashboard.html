@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Natalify</title>
+    <meta name="description" content="Natalify Admin Dashboard - Manage products, orders, and customers.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <style>
+        .dashboard-header {
+            background: var(--primary-green);
+            color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-nav {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .nav-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+        
+        .nav-tab:hover {
+            color: var(--primary-green);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .product-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-form .form-group:nth-child(3) {
+            grid-column: 1 / -1;
+        }
+        
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid var(--border-color);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-left: 4px solid var(--primary-green);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--dark-gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: var(--light-green);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .table-header h3 {
+            color: var(--primary-green);
+            margin: 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-icon {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-edit {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .btn-delete {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .btn-edit:hover {
+            background: #bbdefb;
+        }
+        
+        .btn-delete:hover {
+            background: #ffcdd2;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .nav-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .product-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Natalify Admin</a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">View Site</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <span id="userEmail" style="color: var(--dark-gray); margin-right: 1rem;"></span>
+                <button class="btn btn-outline btn-small" id="logoutBtn">Logout</button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="container">
+                <h1>Admin Dashboard</h1>
+                <p>Manage your Natalify store</p>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="container">
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProducts">0</div>
+                    <div class="stat-label">Total Products</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalOrders">0</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingOrders">0</div>
+                    <div class="stat-label">Pending Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRevenue">৳0</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="dashboard-nav">
+                <button class="nav-tab active" data-tab="products">Products</button>
+                <button class="nav-tab" data-tab="orders">Orders</button>
+                <button class="nav-tab" data-tab="add-product">Add Product</button>
+            </div>
+
+            <!-- Products Tab -->
+            <div class="tab-content active" id="products-tab">
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Manage Products</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-content" id="orders-tab">
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Manage Orders</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Product Tab -->
+            <div class="tab-content" id="add-product-tab">
+                <div class="admin-section">
+                    <h3>Add New Product</h3>
+                    <form id="productForm" class="product-form">
+                        <div class="form-group">
+                            <label class="form-label">Product Name *</label>
+                            <input type="text" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Price (৳) *</label>
+                            <input type="number" name="price" class="form-input" required min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select name="category" class="form-input" required>
+                                <option value="">Select Category</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Home">Home & Garden</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Books">Books</option>
+                                <option value="Beauty">Beauty</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Image URL</label>
+                            <input type="url" name="image" class="form-input" placeholder="https://example.com/image.jpg">
+                        </div>
+                        
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-input form-textarea" rows="4" placeholder="Product description..."></textarea>
+                        </div>
+                        
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natalify Admin</h3>
+                <p>Admin dashboard for managing your online store.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">View Site</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="contact.html">Support</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Natalify Admin Panel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js"></script>
+    <script>
+        let products = [];
+        let orders = [];
+
+        // Sample data
+        const sampleProducts = [
+            { id: '1', name: 'Cotton T-Shirt', price: 599, category: 'Fashion', image: 'https://via.placeholder.com/50x50', rating: 4.5, reviews: 23, description: 'Premium cotton t-shirt' },
+            { id: '2', name: 'Wireless Headphones', price: 2499, category: 'Electronics', image: 'https://via.placeholder.com/50x50', rating: 4.2, reviews: 45, description: 'High-quality wireless headphones' },
+            { id: '3', name: 'Coffee Mug Set', price: 899, category: 'Home', image: 'https://via.placeholder.com/50x50', rating: 4.8, reviews: 12, description: 'Beautiful ceramic mug set' }
+        ];
+
+        const sampleOrders = [
+            { id: '1', orderNumber: 'ORD12345678', customerName: 'John Doe', phone: '+8801712345678', total: 1499, status: 'pending', createdAt: new Date(), items: [{ name: 'Cotton T-Shirt', quantity: 2 }] },
+            { id: '2', orderNumber: 'ORD12345679', customerName: 'Jane Smith', phone: '+8801812345678', total: 2499, status: 'confirmed', createdAt: new Date(), items: [{ name: 'Wireless Headphones', quantity: 1 }] }
+        ];
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            setupTabs();
+            setupLogout();
+            loadDashboardData();
+            setupForms();
+        });
+
+        // Check authentication
+        function checkAuth() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const user = JSON.parse(currentUser);
+            if (user.role !== 'admin') {
+                showAlert('Access denied. Admin privileges required.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+            
+            // Update UI with user info
+            document.getElementById('userEmail').textContent = user.email;
+        }
+
+        // Setup tabs
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    const targetTab = tab.dataset.tab;
+                    document.getElementById(targetTab + '-tab').classList.add('active');
+                });
+            });
+        }
+
+        // Setup logout
+        function setupLogout() {
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                showAlert('Logged out successfully', 'success');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            });
+        }
+
+        // Load dashboard data
+        function loadDashboardData() {
+            // Load sample data
+            products = [...sampleProducts];
+            orders = [...sampleOrders];
+            
+            updateStats();
+            displayProducts();
+            displayOrders();
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalProducts').textContent = products.length;
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = orders.filter(o => o.status === 'pending').length;
+            
+            const revenue = orders.reduce((sum, order) => sum + order.total, 0);
+            document.getElementById('totalRevenue').textContent = `৳${revenue}`;
+        }
+
+        // Display products
+        function displayProducts() {
+            const tbody = document.getElementById('productsTable');
+            tbody.innerHTML = '';
+            
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${product.image}" alt="${product.name}" class="image-preview"></td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>৳${product.price}</td>
+                    <td>${product.rating} ⭐ (${product.reviews})</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-icon btn-edit" onclick="editProduct('${product.id}')" title="Edit">✏️</button>
+                            <button class="btn-icon btn-delete" onclick="deleteProduct('${product.id}')" title="Delete">🗑️</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Display orders
+        function displayOrders() {
+            const tbody = document.getElementById('ordersTable');
+            tbody.innerHTML = '';
+            
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.orderNumber}</td>
+                    <td>${order.customerName}</td>
+                    <td>${order.phone}</td>
+                    <td>৳${order.total}</td>
+                    <td>
+                        <select onchange="updateOrderStatus('${order.id}', this.value)" class="form-input" style="padding: 0.25rem;">
+                            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                            <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </td>
+                    <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn-icon btn-edit" onclick="viewOrderDetails('${order.id}')" title="View Details">👁️</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Setup forms
+        function setupForms() {
+            const productForm = document.getElementById('productForm');
+            if (productForm) {
+                productForm.addEventListener('submit', handleAddProduct);
+            }
+        }
+
+        // Handle add product
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            const newProduct = {
+                id: Date.now().toString(),
+                name: formData.get('name'),
+                price: parseFloat(formData.get('price')),
+                category: formData.get('category'),
+                image: formData.get('image') || 'https://via.placeholder.com/300x250',
+                description: formData.get('description'),
+                rating: 4.0,
+                reviews: 0,
+                createdAt: new Date()
+            };
+            
+            products.push(newProduct);
+            updateStats();
+            displayProducts();
+            
+            showAlert('Product added successfully!', 'success');
+            e.target.reset();
+        }
+
+        // Edit product
+        window.editProduct = function(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Switch to add product tab and populate form
+            document.querySelector('.nav-tab[data-tab="add-product"]').click();
+            
+            const form = document.getElementById('productForm');
+            form.name.value = product.name;
+            form.price.value = product.price;
+            form.category.value = product.category;
+            form.image.value = product.image;
+            form.description.value = product.description || '';
+            
+            // Change form to edit mode
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Update Product';
+            submitBtn.onclick = () => updateProduct(productId);
+        };
+
+        // Update product
+        function updateProduct(productId) {
+            const form = document.getElementById('productForm');
+            const formData = new FormData(form);
+            
+            const productIndex = products.findIndex(p => p.id === productId);
+            if (productIndex !== -1) {
+                products[productIndex] = {
+                    ...products[productIndex],
+                    name: formData.get('name'),
+                    price: parseFloat(formData.get('price')),
+                    category: formData.get('category'),
+                    image: formData.get('image') || products[productIndex].image,
+                    description: formData.get('description')
+                };
+                
+                displayProducts();
+                showAlert('Product updated successfully!', 'success');
+                
+                // Reset form
+                form.reset();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.textContent = 'Add Product';
+                submitBtn.onclick = null;
+            }
+        }
+
+        // Delete product
+        window.deleteProduct = function(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id !== productId);
+                updateStats();
+                displayProducts();
+                showAlert('Product deleted successfully!', 'success');
+            }
+        };
+
+        // Update order status
+        window.updateOrderStatus = function(orderId, newStatus) {
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = newStatus;
+                updateStats();
+                showAlert('Order status updated!', 'success');
+            }
+        };
+
+        // View order details
+        window.viewOrderDetails = function(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="modal-close" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <h2 style="color: var(--primary-green); margin-bottom: 1rem;">Order Details</h2>
+                    <p><strong>Order #:</strong> ${order.orderNumber}</p>
+                    <p><strong>Customer:</strong> ${order.customerName}</p>
+                    <p><strong>Phone:</strong> ${order.phone}</p>
+                    <p><strong>Total:</strong> ৳${order.total}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span></p>
+                    <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
+                    <h3 style="margin: 1rem 0;">Items:</h3>
+                    <ul>
+                        ${order.items.map(item => `<li>${item.name} x ${item.quantity}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        };
+
+        // Show alert
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '100px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+{
+  "name": "natalify-ecommerce",
+  "version": "1.0.0",
+  "description": "Modern E-commerce Website for Bangladesh - Natalify",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx live-server --port=3000 --open=/index.html",
+    "dev": "npx live-server --port=3000 --open=/index.html --watch=.",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "firebase deploy --only hosting",
+    "deploy:init": "firebase init hosting",
+    "seed": "echo 'Open index.html and run seedDatabase() in browser console'",
+    "lint": "npx eslint *.js",
+    "format": "npx prettier --write *.html *.css *.js *.md"
+  },
+  "keywords": [
+    "ecommerce",
+    "bangladesh",
+    "online-shopping",
+    "firebase",
+    "javascript",
+    "html",
+    "css",
+    "responsive",
+    "modern",
+    "shopping-cart"
+  ],
+  "author": {
+    "name": "Natalify Team",
+    "email": "info@natalify.com",
+    "url": "https://natalify.com"
+  },
+  "license": "MIT",
+  "homepage": "https://natalify.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natalify/ecommerce-website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/natalify/ecommerce-website/issues",
+    "email": "support@natalify.com"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "devDependencies": {
+    "firebase-tools": "^12.0.0",
+    "live-server": "^1.2.2",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  },
+  "dependencies": {},
+  "config": {
+    "port": 3000
+  },
+  "firebase": {
+    "hosting": {
+      "public": ".",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**",
+        "package*.json",
+        "README.md",
+        "DEPLOYMENT.md"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png|svg|webp)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(css|js)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "printWidth": 100
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "warn"
+    }
+  }
+}

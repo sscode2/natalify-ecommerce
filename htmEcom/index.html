@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natalify - Modern Shopping Experience in Bangladesh</title>
+    <meta name="description" content="Natalify - Your trusted online shopping destination in Bangladesh. Shop for fashion, electronics, home goods and more with fast delivery and great prices.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Natalify</a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                
+                <button class="cart-icon" onclick="window.location.href='cart.html'">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                
+                <button class="user-icon" id="userIcon" onclick="window.location.href='login.html'">👤</button>
+                
+                <button class="btn btn-outline btn-small" id="loginBtn" onclick="window.location.href='login.html'">Login</button>
+                <button class="btn btn-primary btn-small hidden" id="logoutBtn">Logout</button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Natalify</h1>
+                <p>Your trusted online shopping destination in Bangladesh. Discover amazing products with fast delivery and great prices.</p>
+                <a href="shop.html" class="btn btn-primary">Shop Now</a>
+                <a href="about.html" class="btn btn-secondary">Learn More</a>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Shop by Category</h2>
+                <div class="categories" id="categories">
+                    <!-- Categories will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="product-grid" id="featuredProducts">
+                    <!-- Featured products will be loaded dynamically -->
+                </div>
+                <div class="text-center mt-3">
+                    <a href="shop.html" class="btn btn-primary">View All Products</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="section" style="background: var(--light-green);">
+            <div class="container">
+                <h2 class="section-title">Why Choose Natalify?</h2>
+                <div class="categories">
+                    <div class="category-card">
+                        <div class="category-icon">🚚</div>
+                        <h3 class="category-title">Fast Delivery</h3>
+                        <p>Quick delivery across Bangladesh with reliable shipping partners.</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">💳</div>
+                        <h3 class="category-title">Secure Payment</h3>
+                        <p>Multiple payment options including Cash on Delivery and bKash.</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🛡️</div>
+                        <h3 class="category-title">Quality Guarantee</h3>
+                        <p>100% authentic products with quality assurance and easy returns.</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">📞</div>
+                        <h3 class="category-title">24/7 Support</h3>
+                        <p>Round-the-clock customer support to help you with any queries.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="section">
+            <div class="container">
+                <div style="background: var(--primary-green); color: white; padding: 3rem; border-radius: 10px; text-align: center;">
+                    <h2 style="color: white; margin-bottom: 1rem;">Stay Updated</h2>
+                    <p style="margin-bottom: 2rem; opacity: 0.9;">Subscribe to our newsletter for latest offers and new arrivals!</p>
+                    <div style="display: flex; gap: 1rem; max-width: 400px; margin: 0 auto;">
+                        <input type="email" placeholder="Enter your email" style="flex: 1; padding: 0.75rem; border: none; border-radius: 5px;">
+                        <button class="btn btn-secondary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natalify</h3>
+                <p>Your trusted online shopping destination in Bangladesh. We bring you quality products at great prices with fast delivery.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">📱</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html">Cart</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <a href="shop.html?category=Fashion">Fashion</a>
+                <a href="shop.html?category=Electronics">Electronics</a>
+                <a href="shop.html?category=Home">Home & Garden</a>
+                <a href="shop.html?category=Sports">Sports</a>
+                <a href="shop.html?category=Beauty">Beauty</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Shipping Info</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Returns</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">FAQ</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Size Guide</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Natalify. All rights reserved. Made with ❤️ in Bangladesh.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js"></script>
+    <script>
+        // Load categories
+        function loadCategories() {
+            const categories = [
+                { name: 'Fashion', icon: '👗', count: 25 },
+                { name: 'Electronics', icon: '📱', count: 18 },
+                { name: 'Home & Garden', icon: '🏠', count: 32 },
+                { name: 'Sports', icon: '⚽', count: 15 },
+                { name: 'Books', icon: '📚', count: 12 },
+                { name: 'Beauty', icon: '💄', count: 20 }
+            ];
+            
+            const container = document.getElementById('categories');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            categories.forEach(category => {
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'category-card';
+                categoryCard.innerHTML = `
+                    <div class="category-icon">${category.icon}</div>
+                    <h3 class="category-title">${category.name}</h3>
+                    <p>${category.count} items</p>
+                `;
+                categoryCard.addEventListener('click', () => {
+                    window.location.href = `shop.html?category=${category.name}`;
+                });
+                container.appendChild(categoryCard);
+            });
+        }
+
+        // Show alert function
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '100px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // Load categories when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategories();
+        });
+    </script>
+</body>
+</html>

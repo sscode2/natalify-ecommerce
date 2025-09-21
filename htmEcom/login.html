@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Natalify</title>
+    <meta name="description" content="Login to your Natalify account to access exclusive features and track your orders.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <style>
+        .auth-container {
+            min-height: calc(100vh - 160px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--light-green), var(--white));
+        }
+        
+        .auth-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-hover);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .auth-header {
+            margin-bottom: 2rem;
+        }
+        
+        .auth-header h1 {
+            color: var(--primary-green);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-header p {
+            color: var(--dark-gray);
+            font-size: 1rem;
+        }
+        
+        .auth-form {
+            text-align: left;
+        }
+        
+        .auth-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-form .form-input {
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+        }
+        
+        .auth-form .btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: var(--dark-gray);
+        }
+        
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+        
+        .auth-divider span {
+            padding: 0 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .auth-switch {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .auth-switch a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+        
+        .demo-credentials {
+            background: var(--light-green);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        
+        .demo-credentials h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-credentials p {
+            margin: 0.25rem 0;
+            color: var(--dark-gray);
+        }
+        
+        .loading {
+            display: none;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
+        }
+        
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Natalify</a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                
+                <button class="cart-icon" onclick="window.location.href='cart.html'">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="auth-container">
+            <div class="auth-card">
+                <!-- Login Section -->
+                <div id="loginSection">
+                    <div class="auth-header">
+                        <h1>Welcome Back!</h1>
+                        <p>Sign in to your Natalify account</p>
+                    </div>
+                    
+                    <div class="demo-credentials">
+                        <h4>Demo Accounts:</h4>
+                        <p><strong>Admin:</strong> admin@natalify.com / admin123</p>
+                        <p><strong>User:</strong> user@example.com / user123</p>
+                    </div>
+                    
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-input" required placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-input" required placeholder="Enter your password">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Sign In</span>
+                            <span class="loading">Signing in...</span>
+                        </button>
+                    </form>
+                    
+                    <div class="auth-divider">
+                        <span>Don't have an account?</span>
+                    </div>
+                    
+                    <div class="auth-switch">
+                        <a href="#" id="showRegister">Create a new account</a>
+                    </div>
+                </div>
+                
+                <!-- Register Section -->
+                <div id="registerSection" style="display: none;">
+                    <div class="auth-header">
+                        <h1>Join Natalify!</h1>
+                        <p>Create your account to start shopping</p>
+                    </div>
+                    
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-input" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-input" required placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-input" required placeholder="Create a password" minlength="6">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" name="confirmPassword" class="form-input" required placeholder="Confirm your password">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                                <input type="checkbox" required>
+                                I agree to the <a href="#" style="color: var(--primary-green);">Terms & Conditions</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Create Account</span>
+                            <span class="loading">Creating account...</span>
+                        </button>
+                    </form>
+                    
+                    <div class="auth-divider">
+                        <span>Already have an account?</span>
+                    </div>
+                    
+                    <div class="auth-switch">
+                        <a href="#" id="showLogin">Sign in to your account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natalify</h3>
+                <p>Your trusted online shopping destination in Bangladesh. We bring you quality products at great prices with fast delivery.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="WhatsApp">📱</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html">Cart</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <a href="shop.html?category=Fashion">Fashion</a>
+                <a href="shop.html?category=Electronics">Electronics</a>
+                <a href="shop.html?category=Home">Home & Garden</a>
+                <a href="shop.html?category=Sports">Sports</a>
+                <a href="shop.html?category=Beauty">Beauty</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Shipping Info</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Returns</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">FAQ</a>
+                <a href="#" onclick="showAlert('Coming soon!', 'info')">Size Guide</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Natalify. All rights reserved. Made with ❤️ in Bangladesh.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js"></script>
+    <script>
+        // Demo users for testing
+        const demoUsers = {
+            'admin@natalify.com': { password: 'admin123', name: 'Admin User', role: 'admin' },
+            'user@example.com': { password: 'user123', name: 'Demo User', role: 'customer' }
+        };
+
+        // Initialize login page
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAuthForms();
+            updateCartUI();
+        });
+
+        // Setup authentication forms
+        function setupAuthForms() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const showRegister = document.getElementById('showRegister');
+            const showLogin = document.getElementById('showLogin');
+            
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+            
+            if (registerForm) {
+                registerForm.addEventListener('submit', handleRegister);
+            }
+            
+            if (showRegister) {
+                showRegister.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('loginSection').style.display = 'none';
+                    document.getElementById('registerSection').style.display = 'block';
+                });
+            }
+            
+            if (showLogin) {
+                showLogin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('registerSection').style.display = 'none';
+                    document.getElementById('loginSection').style.display = 'block';
+                });
+            }
+        }
+
+        // Handle login
+        async function handleLogin(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline';
+            submitBtn.disabled = true;
+            
+            try {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Check demo users
+                const user = demoUsers[email];
+                if (user && user.password === password) {
+                    // Store user session
+                    localStorage.setItem('currentUser', JSON.stringify({
+                        email: email,
+                        name: user.name,
+                        role: user.role
+                    }));
+                    
+                    showAlert('Login successful!', 'success');
+                    
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (user.role === 'admin') {
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 1000);
+                } else {
+                    throw new Error('Invalid email or password');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Login failed: ' + error.message, 'error');
+            } finally {
+                // Reset button state
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Handle registration
+        async function handleRegister(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+            
+            btnText.style.display = 'none';
+            loading.style.display = 'inline';
+            submitBtn.disabled = true;
+            
+            try {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Check if user already exists
+                if (demoUsers[email]) {
+                    throw new Error('User with this email already exists');
+                }
+                
+                // Add user to demo users (in real app, this would be Firebase)
+                demoUsers[email] = {
+                    password: password,
+                    name: name,
+                    role: 'customer'
+                };
+                
+                // Store user session
+                localStorage.setItem('currentUser', JSON.stringify({
+                    email: email,
+                    name: name,
+                    role: 'customer'
+                }));
+                
+                showAlert('Registration successful! Welcome to Natalify!', 'success');
+                
+                // Redirect to homepage
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('Registration failed: ' + error.message, 'error');
+            } finally {
+                // Reset button state
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '100px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // Check if user is already logged in
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            const user = JSON.parse(currentUser);
+            if (user.role === 'admin') {
+                window.location.href = 'dashboard.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
